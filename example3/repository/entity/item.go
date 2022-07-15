@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"go-oo/example2/domain"
+	"go-oo/example3/domain"
 )
 
 type Items []*Item
@@ -23,7 +23,6 @@ func (ent *Item) Mapping() *domain.Item {
 	dom.Title = ent.Title
 	dom.Stock = ent.Stock
 	dom.PriceMarket = ent.PriceMarket
-
 	return dom
 
 	/**************** mapping end  ****************/

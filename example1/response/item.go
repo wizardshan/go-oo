@@ -24,10 +24,7 @@ func (resp *Item) Mapping(dom *domain.Item) {
 	resp.PriceMarket = dom.PriceMarket
 	resp.Price = dom.Price()
 	resp.Rebate = dom.Rebate()
-
-	if resp.Category == domain.ItemCategoryRebate {
-		resp.PriceMarketHidden = true
-	}
+	resp.PriceMarketHidden = dom.PriceMarketHidden()
 
 	/**************** mapping end  ****************/
 }

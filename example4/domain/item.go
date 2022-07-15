@@ -15,6 +15,11 @@ type ItemPriceMarketHidden interface {
 	PriceMarketHidden() bool
 }
 
+// VIP价格计算器接口
+type ItemPriceVIPCalculator interface {
+	PriceVIP() *int
+}
+
 const (
 	ItemCategoryRebate = iota + 1
 	ItemCategoryDiscount
@@ -53,4 +58,12 @@ func (dom *Item) OfInstanceDiscount() *ItemDiscount {
 	return &ItemDiscount{
 		Item: dom,
 	}
+}
+
+type ItemPriceVIP struct {
+}
+
+func (dom *ItemPriceVIP) Calculate(price int) *int {
+	priceVIP := price - 1
+	return &priceVIP
 }

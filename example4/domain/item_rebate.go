@@ -3,11 +3,17 @@ package domain
 // 返利商品
 type ItemRebate struct {
 	*Item
+	*ItemPriceVIP
 }
 
 // 实现价格计算器接口
 func (dom *ItemRebate) Price() int {
 	return dom.PriceMarket
+}
+
+// 实现VIP价格计算器接口
+func (dom *ItemRebate) PriceVIP() *int {
+	return dom.ItemPriceVIP.Calculate(dom.Price())
 }
 
 // 实现返利计算器接口 封装变化
