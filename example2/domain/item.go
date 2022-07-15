@@ -54,3 +54,11 @@ func (dom *Item) OfInstanceDiscount() *ItemDiscount {
 		Item: dom,
 	}
 }
+
+func (dom *Item) StockEnough(number int) bool {
+	if dom.Stock >= number {
+		return true
+	}
+
+	return false
+}

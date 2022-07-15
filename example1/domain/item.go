@@ -42,3 +42,11 @@ func (dom *Item) PriceMarketHidden() bool {
 
 	return true
 }
+
+func (dom *Item) StockEnough(number int) bool {
+	if dom.Stock >= number {
+		return true
+	}
+
+	return false
+}

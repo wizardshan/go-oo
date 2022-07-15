@@ -60,6 +60,14 @@ func (dom *Item) OfInstanceDiscount() *ItemDiscount {
 	}
 }
 
+func (dom *Item) StockEnough(number int) bool {
+	if dom.Stock >= number {
+		return true
+	}
+
+	return false
+}
+
 type ItemPriceVIP struct {
 }
 
@@ -67,3 +75,5 @@ func (dom *ItemPriceVIP) Calculate(price int) *int {
 	priceVIP := price - 1
 	return &priceVIP
 }
+
+
