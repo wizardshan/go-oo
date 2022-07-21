@@ -1,28 +1,7 @@
 package domain
 
-// 价格计算器接口
-type ItemPriceCalculator interface {
-	Price() int
-}
-
-// 返利计算器接口
-type ItemRebateCalculator interface {
-	Rebate() *int
-}
-
-// 市场价是否显示接口
-type ItemPriceMarketHidden interface {
-	PriceMarketHidden() bool
-}
-
-const (
-	ItemCategoryRebate = iota + 1
-	ItemCategoryDiscount
-)
-
 type Items []*Item
 
-// 基类商品
 type Item struct {
 	ID       int
 	Category int
@@ -32,33 +11,21 @@ type Item struct {
 	PriceMarket int
 }
 
-func (dom *Item) OfInstance() interface{} {
-	switch dom.Category {
-	case ItemCategoryRebate:
-		return dom.OfInstanceRebate()
-	case ItemCategoryDiscount:
-		return dom.OfInstanceDiscount()
+// 价格计算函数
+func (dom *Item) Price() int {
+
+	if dom.Category == 2 {
+		return dom.PriceMarket // 返回市场价原价
 	}
 
-	return nil
+	return dom.PriceMarket / 2 // 返回市场价的50%
 }
 
-func (dom *Item) OfInstanceRebate() *ItemRebate {
-	return &ItemRebate{
-		Item: dom,
-	}
-}
-
-func (dom *Item) OfInstanceDiscount() *ItemDiscount {
-	return &ItemDiscount{
-		Item: dom,
-	}
-}
-
-func (dom *Item) StockEnough(number int) bool {
-	if dom.Stock >= number {
-		return true
+// 返利金额计算函数
+func (dom *Item) Rebate() int {
+	if dom.Category == 1 {
+		return 0
 	}
 
-	return false
+	return dom.PriceMarket * 5 / 100
 }

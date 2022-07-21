@@ -44,14 +44,5 @@ func (repo *Item) All() domain.Items {
 	item2.PriceMarket = 80
 	items = append(items, item2)
 
-
-	item3 := new(entity.Item)
-	item3.ID = 3
-	item3.Category = 3
-	item3.Title = "T shirt3"
-	item3.Stock = 3
-	item3.PriceMarket = 60
-	items = append(items, item3)
-
 	return items.Mapping()
 }

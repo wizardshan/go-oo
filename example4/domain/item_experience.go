@@ -9,4 +9,3 @@ type ItemExperience struct {
 func (dom *ItemExperience) Price() int {
 	return 0
 }
-

@@ -1,46 +1,17 @@
 package domain
 
-const (
-	ItemCategoryRebate = iota + 1
-	ItemCategoryDiscount
-)
-
 type Items []*Item
 
 type Item struct {
-	ID       int
-	Category int
-	Title    string
-	Stock    int
-
+	ID          int
+	Title       string
+	Stock       int
 	PriceMarket int
 }
 
+// 价格计算函数
 func (dom *Item) Price() int {
-	if dom.Category == ItemCategoryRebate {
-		return dom.PriceMarket // 返回市场价
-	} else if dom.Category == ItemCategoryDiscount {
-		return dom.PriceMarket / 2 // 返回市场价除以2
-	}
-
-	return 0
-}
-
-func (dom *Item) Rebate() *int {
-	if dom.Category == ItemCategoryRebate {
-		rebate := dom.PriceMarket * 5 / 100
-		return &rebate
-	}
-
-	return nil
-}
-
-func (dom *Item) PriceMarketHidden() bool {
-	if dom.Category == ItemCategoryRebate {
-		return false
-	}
-
-	return true
+	return dom.PriceMarket / 2
 }
 
 func (dom *Item) StockEnough(number int) bool {

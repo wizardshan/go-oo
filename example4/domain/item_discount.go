@@ -15,5 +15,3 @@ func (dom *ItemDiscount) Price() int {
 func (dom *ItemDiscount) PriceVIP() *int {
 	return dom.ItemPriceVIP.Calculate(dom.Price())
 }
-
-

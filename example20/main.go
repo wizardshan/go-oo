@@ -12,7 +12,5 @@ func main() {
 	itemsCtr := controller.NewItems()
 	r.GET("example2/items", itemsCtr.Get)
 
-	itemCtr := controller.NewItem()
-	r.GET("example2/item", itemCtr.Get)
 	r.Run()
 }

@@ -23,7 +23,6 @@ func (ent *Item) Mapping() *domain.Item {
 	dom.Title = ent.Title
 	dom.Stock = ent.Stock
 	dom.PriceMarket = ent.PriceMarket
-
 	return dom
 
 	/**************** mapping end  ****************/

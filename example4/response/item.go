@@ -5,15 +5,15 @@ import "go-oo/example4/domain"
 type Items []*Item
 
 type Item struct {
-	ID          int    `json:"id"`
-	Category    int    `json:"category"`
-	Title       string `json:"title"`
-	Stock       int    `json:"stock"`
-	PriceMarket int    `json:"priceMarket"`
-	PriceMarketHidden bool    `json:"priceMarketHidden"`
-	Price       int    `json:"price"`
-	PriceVIP       *int    `json:"priceVIP,omitempty"`
-	Rebate      *int    `json:"rebate,omitempty"`
+	ID                int    `json:"id"`
+	Category          int    `json:"category"`
+	Title             string `json:"title"`
+	Stock             int    `json:"stock"`
+	PriceMarket       int    `json:"priceMarket"`
+	PriceMarketHidden bool   `json:"priceMarketHidden"`
+	Price             int    `json:"price"`
+	PriceVIP          *int   `json:"priceVIP,omitempty"`
+	Rebate            *int   `json:"rebate,omitempty"`
 }
 
 func (resp *Item) Mapping(dom *domain.Item) {

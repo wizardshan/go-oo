@@ -12,18 +12,6 @@ func NewItem() *Item {
 	return new(Item)
 }
 
-func (repo *Item) Get() *domain.Item {
-
-	item := new(entity.Item)
-	item.ID = 1
-	item.Category = 1
-	item.Title = "T shirt1"
-	item.Stock = 1
-	item.PriceMarket = 100
-
-	return item.Mapping()
-}
-
 func (repo *Item) All() domain.Items {
 
 	var items entity.Items
