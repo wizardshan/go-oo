@@ -1,5 +1,11 @@
 package domain
 
+const (
+	ItemCategoryDiscount = iota + 1
+	ItemCategoryTrial
+	ItemCategoryRebate
+)
+
 type Items []*Item
 
 type Item struct {
@@ -12,9 +18,9 @@ type Item struct {
 
 // 价格计算函数
 func (dom *Item) Price() int {
-	if dom.Category == 2 {
+	if dom.Category == ItemCategoryTrial {
 		return 0
-	} else if dom.Category == 3 {
+	} else if dom.Category == ItemCategoryRebate {
 		return dom.PriceMarket
 	}
 
@@ -23,5 +29,8 @@ func (dom *Item) Price() int {
 
 // 返利计算函数
 func (dom *Item) Rebate() int {
+	if dom.Category != ItemCategoryRebate {
+		return 0
+	}
 	return dom.PriceMarket * 5 / 100
 }
