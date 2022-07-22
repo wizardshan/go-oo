@@ -1,12 +1,18 @@
 package domain
 
+const (
+	ItemCategoryDiscount = iota + 1
+	ItemCategoryRebate
+)
+
 type Items []*Item
 
 type Item struct {
-	ID          int
-	Category    int
-	Title       string
-	Stock       int
+	ID       int
+	Category int
+	Title    string
+	Stock    int
+
 	PriceMarket int
 }
 

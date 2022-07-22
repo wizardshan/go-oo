@@ -16,7 +16,6 @@ func (repo *Item) Get() *domain.Item {
 
 	item := new(entity.Item)
 	item.ID = 1
-	item.Category = 1
 	item.Title = "T shirt1"
 	item.Stock = 1
 	item.PriceMarket = 100
@@ -41,7 +40,7 @@ func (repo *Item) All() domain.Items {
 	item2.Category = 2
 	item2.Title = "T shirt2"
 	item2.Stock = 2
-	item2.PriceMarket = 80
+	item2.PriceMarket = 10
 	items = append(items, item2)
 
 	return items.Mapping()

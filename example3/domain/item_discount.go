@@ -3,7 +3,6 @@ package domain
 // 折扣商品
 type ItemDiscount struct {
 	*Item
-
 }
 
 // 实现价格计算器接口

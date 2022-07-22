@@ -13,11 +13,3 @@ type Item struct {
 func (dom *Item) Price() int {
 	return dom.PriceMarket / 2
 }
-
-func (dom *Item) StockEnough(number int) bool {
-	if dom.Stock >= number {
-		return true
-	}
-
-	return false
-}

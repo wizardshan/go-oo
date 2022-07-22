@@ -17,6 +17,7 @@ type Item struct {
 }
 
 func (resp *Item) Mapping(dom *domain.Item) {
+	/**************** mapping start ****************/
 	resp.ID = dom.ID
 	resp.Category = dom.Category
 	resp.Title = dom.Title
@@ -29,6 +30,11 @@ func (resp *Item) Mapping(dom *domain.Item) {
 		resp.Price = priceCalculator.Price()
 	}
 
+	// 断言计算VIP价格
+	if priceVIPCalculator, ok := instance.(domain.ItemPriceVIPCalculator); ok {
+		resp.PriceVIP = priceVIPCalculator.PriceVIP()
+	}
+
 	// 断言计算返利
 	if rebateCalculator, ok := instance.(domain.ItemRebateCalculator); ok {
 		resp.Rebate = rebateCalculator.Rebate()
@@ -38,9 +44,12 @@ func (resp *Item) Mapping(dom *domain.Item) {
 	if rebateCalculator, ok := instance.(domain.ItemPriceMarketHidden); ok {
 		resp.PriceMarketHidden = rebateCalculator.PriceMarketHidden()
 	}
+
+	/**************** mapping end  ****************/
 }
 
 func (resp *Items) Mapping(dom domain.Items) {
+	/**************** mapping start ****************/
 	domItemsLen := len(dom)
 	*resp = make(Items, domItemsLen)
 	if domItemsLen > 0 {
@@ -50,4 +59,6 @@ func (resp *Items) Mapping(dom domain.Items) {
 			(*resp)[domItemsIndex] = respItem
 		}
 	}
+
+	/**************** mapping end  ****************/
 }

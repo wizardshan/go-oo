@@ -5,14 +5,12 @@ import "go-oo/example3/domain"
 type Items []*Item
 
 type Item struct {
-	ID                int    `json:"id"`
-	Category          int    `json:"category"`
-	Title             string `json:"title"`
-	Stock             int    `json:"stock"`
-	PriceMarket       int    `json:"priceMarket"`
-	PriceMarketHidden bool   `json:"priceMarketHidden"`
-	Price             int    `json:"price"`
-	Rebate            *int   `json:"rebate,omitempty"`
+	ID          int    `json:"id"`
+	Category    int    `json:"category"`
+	Title       string `json:"title"`
+	Stock       int    `json:"stock"`
+	PriceMarket int    `json:"priceMarket"`
+	Price       int    `json:"price"`
 }
 
 func (resp *Item) Mapping(dom *domain.Item) {
@@ -21,9 +19,12 @@ func (resp *Item) Mapping(dom *domain.Item) {
 	resp.Title = dom.Title
 	resp.Stock = dom.Stock
 	resp.PriceMarket = dom.PriceMarket
-	resp.Price = dom.Price()
-	resp.Rebate = dom.Rebate()
-	resp.PriceMarketHidden = dom.PriceMarketHidden()
+
+	instance := dom.OfInstance()
+	// 断言计算价格
+	if priceCalculator, ok := instance.(domain.ItemPriceCalculator); ok {
+		resp.Price = priceCalculator.Price()
+	}
 }
 
 func (resp *Items) Mapping(dom domain.Items) {

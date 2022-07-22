@@ -1,5 +1,25 @@
 package domain
 
+// 价格计算器接口
+type ItemPriceCalculator interface {
+	Price() int
+}
+
+// 返利计算器接口
+type ItemRebateCalculator interface {
+	Rebate() *int
+}
+
+// 市场价是否显示接口
+type ItemPriceMarketHidden interface {
+	PriceMarketHidden() bool
+}
+
+// VIP价格计算器接口
+type ItemPriceVIPCalculator interface {
+	PriceVIP() *int
+}
+
 const (
 	ItemCategoryDiscount = iota + 1
 	ItemCategoryRebate
@@ -46,4 +66,12 @@ func (dom *Item) StockEnough(number int) bool {
 	}
 
 	return false
+}
+
+type ItemPriceVIP struct {
+}
+
+func (dom *ItemPriceVIP) Calculate(price int) *int {
+	priceVIP := price - 1
+	return &priceVIP
 }
