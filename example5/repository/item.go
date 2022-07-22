@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"go-oo/example4/domain"
-	"go-oo/example4/repository/entity"
+	"go-oo/example5/domain"
+	"go-oo/example5/repository/entity"
 )
 
 type Item struct {

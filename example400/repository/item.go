@@ -12,17 +12,6 @@ func NewItem() *Item {
 	return new(Item)
 }
 
-func (repo *Item) Get() *domain.Item {
-
-	item := new(entity.Item)
-	item.ID = 1
-	item.Title = "T shirt1"
-	item.Stock = 1
-	item.PriceMarket = 100
-
-	return item.Mapping()
-}
-
 func (repo *Item) All() domain.Items {
 
 	var items entity.Items
@@ -40,16 +29,8 @@ func (repo *Item) All() domain.Items {
 	item2.Category = 2
 	item2.Title = "T shirt2"
 	item2.Stock = 2
-	item2.PriceMarket = 10
+	item2.PriceMarket = 80
 	items = append(items, item2)
-
-	item3 := new(entity.Item)
-	item3.ID = 3
-	item3.Category = 3
-	item3.Title = "T shirt2"
-	item3.Stock = 3
-	item3.PriceMarket = 100
-	items = append(items, item3)
 
 	return items.Mapping()
 }

@@ -14,6 +14,8 @@ type Item struct {
 func (dom *Item) Price() int {
 	if dom.Category == 2 {
 		return 0
+	} else if dom.Category == 3 {
+		return dom.PriceMarket
 	}
 
 	return dom.PriceMarket / 2

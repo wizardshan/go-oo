@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"go-oo/example4/domain"
+	"go-oo/example5/domain"
 )
 
 type Items []*Item
@@ -11,7 +11,6 @@ type Item struct {
 	Category int
 	Title string
 	Stock int
-
 	PriceMarket int
 }
 
@@ -23,7 +22,6 @@ func (ent *Item) Mapping() *domain.Item {
 	dom.Stock = ent.Stock
 	dom.PriceMarket = ent.PriceMarket
 	return dom
-
 }
 
 func (ent Items) Mapping() domain.Items {

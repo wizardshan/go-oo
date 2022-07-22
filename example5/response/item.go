@@ -1,6 +1,6 @@
 package response
 
-import "go-oo/example4/domain"
+import "go-oo/example5/domain"
 
 type Items []*Item
 
@@ -20,8 +20,17 @@ func (resp *Item) Mapping(dom *domain.Item) {
 	resp.Title = dom.Title
 	resp.Stock = dom.Stock
 	resp.PriceMarket = dom.PriceMarket
-	resp.Price = dom.Price()       // 调用业务模型函数Price，计算商品价格
-	resp.Rebate = dom.Rebate()     // 调用业务模型函数Rebate，计算返利金额
+
+	instance := dom.OfInstance()
+	// 断言计算价格
+	if priceCalculator, ok := instance.(domain.ItemPriceCalculator); ok {
+		resp.Price = priceCalculator.Price()
+	}
+
+	// 断言计算返利
+	if rebateCalculator, ok := instance.(domain.ItemRebateCalculator); ok {
+		resp.Rebate = rebateCalculator.Rebate()
+	}
 }
 
 func (resp *Items) Mapping(dom domain.Items) {
