@@ -31,6 +31,7 @@ func (resp *Item) Mapping(dom *domain.Item) {
 	// 断言计算VIP价格
 	if priceVIPCalculator, ok := dom.Instance.(domain.ItemPriceVIPCalculator); ok {
 		priceVIP := priceVIPCalculator.PriceVIP()
+
 		resp.PriceVIP = &priceVIP
 	}
 
