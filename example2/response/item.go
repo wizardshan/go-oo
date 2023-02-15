@@ -1,35 +1,39 @@
 package response
 
-import "go-oo/example2/domain"
+import (
+	"go-oo/example2/bo"
+)
 
 type Items []*Item
 
 type Item struct {
 	ID          int    `json:"id"`
-	Category    int    `json:"category"`
 	Title       string `json:"title"`
 	Stock       int    `json:"stock"`
 	PriceMarket int    `json:"priceMarket"`
 	Price       int    `json:"price"`
 }
 
-func (resp *Item) Mapping(dom *domain.Item) {
-	resp.ID = dom.ID
-	resp.Category = dom.Category
-	resp.Title = dom.Title
-	resp.Stock = dom.Stock
-	resp.PriceMarket = dom.PriceMarket
-	resp.Price = dom.Price()       // 调用业务模型函数Price，计算商品价格
+func (resp *Item) Mapping(bo *bo.Item) {
+	if bo == nil {
+		return
+	}
+
+	resp.ID = bo.ID
+	resp.Title = bo.Title
+	resp.Stock = bo.Stock
+	resp.PriceMarket = bo.PriceMarket
+	resp.Price = bo.Price
 }
 
-func (resp *Items) Mapping(dom domain.Items) {
-	domItemsLen := len(dom)
-	*resp = make(Items, domItemsLen)
-	if domItemsLen > 0 {
-		for domItemsIndex := 0; domItemsIndex < domItemsLen; domItemsIndex++ {
+func (resp *Items) Mapping(bos bo.Items) {
+	bosLen := len(bos)
+	*resp = make(Items, bosLen)
+	if bosLen > 0 {
+		for boIndex := 0; boIndex < bosLen; boIndex++ {
 			respItem := new(Item)
-			respItem.Mapping(dom[domItemsIndex])
-			(*resp)[domItemsIndex] = respItem
+			respItem.Mapping(bos[boIndex])
+			(*resp)[boIndex] = respItem
 		}
 	}
 }
