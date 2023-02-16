@@ -1,6 +1,6 @@
 package response
 
-import "go-oo/example2/domain"
+import "go-oo/example4/domain"
 
 type Items []*Item
 
@@ -11,6 +11,7 @@ type Item struct {
 	Stock       int    `json:"stock"`
 	PriceMarket int    `json:"priceMarket"`
 	Price       int    `json:"price"`
+	Rebate      int    `json:"rebate"`
 }
 
 func (resp *Item) Mapping(dom *domain.Item) {
@@ -20,6 +21,7 @@ func (resp *Item) Mapping(dom *domain.Item) {
 	resp.Stock = dom.Stock
 	resp.PriceMarket = dom.PriceMarket
 	resp.Price = dom.Price()       // 调用业务模型函数Price，计算商品价格
+	resp.Rebate = dom.Rebate()     // 调用业务模型函数Rebate，计算返利金额
 }
 
 func (resp *Items) Mapping(dom domain.Items) {

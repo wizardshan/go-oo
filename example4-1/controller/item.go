@@ -2,8 +2,8 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-oo/example2/repository"
-	"go-oo/example2/response"
+	"go-oo/example4/repository"
+	"go-oo/example4/response"
 	"net/http"
 )
 
