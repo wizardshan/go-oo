@@ -1,5 +1,11 @@
 package bo
 
+const (
+	ItemCategoryDiscount = iota + 1
+	ItemCategoryTrial
+	ItemCategoryRebate
+)
+
 // 价格计算器接口
 type ItemPriceCalculator interface {
 	Price() int
@@ -19,6 +25,7 @@ type Item struct {
 	Stock       int
 	PriceMarket int
 	Price       int
+	Rebate      int
 
 	Instance interface{}
 }
@@ -27,15 +34,15 @@ func (bo *Item) OfInstance() {
 
 	var instance interface{}
 	switch bo.Category {
-	case 1:
+	case ItemCategoryDiscount:
 		instance = &ItemDiscount{
 			Item: bo,
 		}
-	case 2:
+	case ItemCategoryTrial:
 		instance = &ItemTrial{
 			Item: bo,
 		}
-	case 3:
+	case ItemCategoryRebate:
 		instance = &ItemRebate{
 			Item: bo,
 		}

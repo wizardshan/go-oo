@@ -28,11 +28,6 @@ func (ent *Item) Mapping() *bo.Item {
 		boItem.Price = priceCalculator.Price()
 	}
 
-	// 断言计算返利
-	if rebateCalculator, ok := boItem.Instance.(bo.ItemRebateCalculator); ok {
-		boItem.Rebate = rebateCalculator.Rebate()
-	}
-
 	return boItem
 }
 

@@ -13,7 +13,6 @@ type Item struct {
 	Stock       int    `json:"stock"`
 	PriceMarket int    `json:"priceMarket"`
 	Price       int    `json:"price"`
-	Rebate      int    `json:"rebate"`
 }
 
 func (resp *Item) Mapping(bo *bo.Item) {
@@ -27,7 +26,6 @@ func (resp *Item) Mapping(bo *bo.Item) {
 	resp.Stock = bo.Stock
 	resp.PriceMarket = bo.PriceMarket
 	resp.Price = bo.Price
-	resp.Rebate = bo.Rebate
 
 }
 
