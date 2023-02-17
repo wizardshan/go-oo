@@ -1,6 +1,6 @@
 package response
 
-import "go-oo/example6/domain"
+import "go-oo/example7/domain"
 
 type Items []*Item
 

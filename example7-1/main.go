@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-oo/example6/controller"
+	"go-oo/example7/controller"
 )
 
 func main() {
@@ -10,9 +10,11 @@ func main() {
 	r := gin.Default()
 
 	itemsCtr := controller.NewItems()
-	r.GET("example6/items", itemsCtr.Get)
+	r.GET("example7/items", itemsCtr.Get)
 
 	itemCtr := controller.NewItem()
-	r.GET("example6/item", itemCtr.Get)
+	r.GET("example7/item", itemCtr.Get)
+	r.GET("example7/item/order", itemCtr.Order)
+
 	r.Run()
 }

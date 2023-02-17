@@ -1,4 +1,4 @@
-package domain
+package bo
 
 // 折扣商品
 type ItemDiscount struct {
@@ -6,6 +6,6 @@ type ItemDiscount struct {
 }
 
 // 实现价格计算器接口
-func (dom *ItemDiscount) Price() int {
-	return dom.PriceMarket / 2
+func (bo *ItemDiscount) Price() int {
+	return bo.PriceMarket / 2
 }

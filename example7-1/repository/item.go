@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"go-oo/example6/domain"
-	"go-oo/example6/repository/entity"
+	"go-oo/example7/domain"
+	"go-oo/example7/repository/entity"
 )
 
 type Item struct {
@@ -16,6 +16,7 @@ func (repo *Item) Get() *domain.Item {
 
 	item := new(entity.Item)
 	item.ID = 1
+	item.Category = 2
 	item.Title = "T shirt1"
 	item.Stock = 1
 	item.PriceMarket = 100

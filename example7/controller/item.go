@@ -17,6 +17,17 @@ func NewItem() *Item {
 	return ctr
 }
 
+// 获取商品列表
+func (ctr *Item) All(c *gin.Context) {
+	items := ctr.repo.All()
+
+	resp := response.Items{}
+	resp.Mapping(items)
+
+	c.JSON(http.StatusOK, resp)
+}
+
+// 获取商品详情
 func (ctr *Item) Get(c *gin.Context) {
 	item := ctr.repo.Get()
 
@@ -24,12 +35,4 @@ func (ctr *Item) Get(c *gin.Context) {
 	resp.Mapping(item)
 
 	c.JSON(http.StatusOK, resp)
-}
-
-func (ctr *Item) Order(c *gin.Context) {
-	item := ctr.repo.Get()
-	number := 2
-	if item.OutOfStock(number) {
-		c.JSON(http.StatusOK, "库存不足")
-	}
 }

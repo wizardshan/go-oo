@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"go-oo/example6/domain"
+	"go-oo/example7/domain"
 )
 
 type Items []*Item

@@ -1,4 +1,4 @@
-package domain
+package bo
 
 const (
 	ItemCategoryDiscount = iota + 1
@@ -16,37 +16,42 @@ type ItemRebateCalculator interface {
 	Rebate() int
 }
 
-// 市场价是否显示接口
+// 市场价是否隐藏接口
 type ItemPriceMarketHidden interface {
 	PriceMarketHidden() bool
 }
 
 type Items []*Item
 
-// 基类商品
 type Item struct {
-	ID       int
-	Category int
-	Title    string
-	Stock    int
+	ID          int
+	Category    int
+	Title       string
+	Stock       int
 	PriceMarket int
+	Price       int
+	Rebate      int
+
+	Instance interface{}
 }
 
-func (dom *Item) OfInstance() interface{} {
-	switch dom.Category {
+func (bo *Item) OfInstance() {
+
+	var instance interface{}
+	switch bo.Category {
 	case ItemCategoryDiscount:
-		return &ItemDiscount{
-			Item: dom,
+		instance = &ItemDiscount{
+			Item: bo,
 		}
 	case ItemCategoryTrial:
-		return &ItemTrial{
-			Item: dom,
+		instance = &ItemTrial{
+			Item: bo,
 		}
 	case ItemCategoryRebate:
-		return &ItemRebate{
-			Item: dom,
+		instance = &ItemRebate{
+			Item: bo,
 		}
 	}
 
-	return nil
+	bo.Instance = instance
 }
