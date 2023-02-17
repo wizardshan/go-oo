@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-oo/example8/domain"
 	"go-oo/example8/repository"
 	"go-oo/example8/response"
 	"net/http"
@@ -18,6 +17,17 @@ func NewItem() *Item {
 	return ctr
 }
 
+// 获取商品列表
+func (ctr *Item) All(c *gin.Context) {
+	items := ctr.repo.All()
+
+	resp := response.Items{}
+	resp.Mapping(items)
+
+	c.JSON(http.StatusOK, resp)
+}
+
+// 获取商品详情
 func (ctr *Item) Get(c *gin.Context) {
 	item := ctr.repo.Get()
 
@@ -30,11 +40,7 @@ func (ctr *Item) Get(c *gin.Context) {
 func (ctr *Item) Order(c *gin.Context) {
 	item := ctr.repo.Get()
 	number := 2
-
-	instance := item.OfInstance()
-	// 断言是否为虚拟商品类型
-	_, isItemVirtual := instance.(*domain.ItemVirtual)
-	if !isItemVirtual && item.OutOfStock(number) {
+	if item.OutOfStock(number) {
 		c.JSON(http.StatusOK, "库存不足")
 	}
 }

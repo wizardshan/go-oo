@@ -2,9 +2,8 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-oo/example10/bo"
-	"go-oo/example10/repository"
-	"go-oo/example10/response"
+	"go-oo/example12/repository"
+	"go-oo/example12/response"
 	"net/http"
 )
 
@@ -36,14 +35,4 @@ func (ctr *Item) Get(c *gin.Context) {
 	resp.Mapping(item)
 
 	c.JSON(http.StatusOK, resp)
-}
-
-func (ctr *Item) Order(c *gin.Context) {
-	item := ctr.repo.Get()
-	number := 2
-
-	stockHandler, ok := item.Instance.(bo.ItemStockHandler)
-	if ok && stockHandler.OutOfStock(number) {
-		c.JSON(http.StatusOK, "库存不足")
-	}
 }

@@ -1,53 +1,49 @@
 package response
 
-import "go-oo/example8/domain"
+import (
+	"go-oo/example8/bo"
+)
 
 type Items []*Item
 
 type Item struct {
-	ID          int    `json:"id"`
-	Category    int    `json:"category"`
-	Title       string `json:"title"`
-	Stock       int    `json:"stock"`
-	PriceMarket int    `json:"priceMarket"`
+	ID                int    `json:"id"`
+	Category          int    `json:"category"`
+	Title             string `json:"title"`
+	Stock             int    `json:"stock"`
+	PriceMarket       int    `json:"priceMarket"`
+	Price             int    `json:"price"`
+	Rebate            int    `json:"rebate,omitempty"`
 	PriceMarketHidden bool   `json:"priceMarketHidden"`
-	Price       int    `json:"price"`
-	Rebate      *int   `json:"rebate,omitempty"`
 }
 
-func (resp *Item) Mapping(dom *domain.Item) {
-	resp.ID = dom.ID
-	resp.Category = dom.Category
-	resp.Title = dom.Title
-	resp.Stock = dom.Stock
-	resp.PriceMarket = dom.PriceMarket
-
-	instance := dom.OfInstance()
-	// 断言计算价格
-	if priceCalculator, ok := instance.(domain.ItemPriceCalculator); ok {
-		resp.Price = priceCalculator.Price()
+func (resp *Item) Mapping(boItem *bo.Item) {
+	if boItem == nil {
+		return
 	}
 
-	// 断言计算返利
-	if rebateCalculator, ok := instance.(domain.ItemRebateCalculator); ok {
-		rebate := rebateCalculator.Rebate()
-		resp.Rebate = &rebate
-	}
+	resp.ID = boItem.ID
+	resp.Category = boItem.Category
+	resp.Title = boItem.Title
+	resp.Stock = boItem.Stock
+	resp.PriceMarket = boItem.PriceMarket
+	resp.Price = boItem.Price
+	resp.Rebate = boItem.Rebate
 
 	// 断言市场价是否显示
-	if rebateCalculator, ok := instance.(domain.ItemPriceMarketHidden); ok {
+	if rebateCalculator, ok := boItem.Instance.(bo.ItemPriceMarketHidden); ok {
 		resp.PriceMarketHidden = rebateCalculator.PriceMarketHidden()
 	}
 }
 
-func (resp *Items) Mapping(dom domain.Items) {
-	domItemsLen := len(dom)
-	*resp = make(Items, domItemsLen)
-	if domItemsLen > 0 {
-		for domItemsIndex := 0; domItemsIndex < domItemsLen; domItemsIndex++ {
+func (resp *Items) Mapping(bos bo.Items) {
+	bosLen := len(bos)
+	*resp = make(Items, bosLen)
+	if bosLen > 0 {
+		for boIndex := 0; boIndex < bosLen; boIndex++ {
 			respItem := new(Item)
-			respItem.Mapping(dom[domItemsIndex])
-			(*resp)[domItemsIndex] = respItem
+			respItem.Mapping(bos[boIndex])
+			(*resp)[boIndex] = respItem
 		}
 	}
 }

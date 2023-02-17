@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-oo/example8/controller"
+	"go-oo/example12/controller"
 )
 
 func main() {
@@ -12,7 +12,6 @@ func main() {
 	itemCtr := controller.NewItem()
 	srv.GET("/items", itemCtr.All)
 	srv.GET("/item", itemCtr.Get)
-	srv.GET("/item/order", itemCtr.Order)
 
 	srv.Run()
 }

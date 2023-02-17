@@ -1,60 +1,60 @@
 package response
 
-import "go-oo/example11/domain"
+import (
+	"go-oo/example11/bo"
+)
 
 type Items []*Item
 
 type Item struct {
-	ID          int    `json:"id"`
-	Category    int    `json:"category"`
-	Title       string `json:"title"`
-	Stock       int    `json:"stock"`
-	PriceMarket int    `json:"priceMarket"`
+	ID                int    `json:"id"`
+	Category          int    `json:"category"`
+	Title             string `json:"title"`
+	Stock             int    `json:"stock"`
+	PriceMarket       int    `json:"priceMarket"`
+	Price             int    `json:"price"`
+	PriceVIP          *int   `json:"priceVIP,omitempty"`
+	Rebate            int    `json:"rebate,omitempty"`
 	PriceMarketHidden bool   `json:"priceMarketHidden"`
-	Price       int    `json:"price"`
-	PriceVIP    *int    `json:"priceVIP,omitempty"`
-	Rebate      *int   `json:"rebate,omitempty"`
 }
 
-func (resp *Item) Mapping(dom *domain.Item) {
-	resp.ID = dom.ID
-	resp.Category = dom.Category
-	resp.Title = dom.Title
-	resp.Stock = dom.Stock
-	resp.PriceMarket = dom.PriceMarket
-
-	// 断言计算价格
-	if priceCalculator, ok := dom.Instance.(domain.ItemPriceCalculator); ok {
-		resp.Price = priceCalculator.Price()
+func (resp *Item) Mapping(boItem *bo.Item) {
+	if boItem == nil {
+		return
 	}
 
-	// 断言计算VIP价格
-	if priceVIPCalculator, ok := dom.Instance.(domain.ItemPriceVIPCalculator); ok {
-		priceVIP := priceVIPCalculator.PriceVIP()
-
-		resp.PriceVIP = &priceVIP
-	}
-
-	// 断言计算返利
-	if rebateCalculator, ok := dom.Instance.(domain.ItemRebateCalculator); ok {
-		rebate := rebateCalculator.Rebate()
-		resp.Rebate = &rebate
-	}
+	resp.ID = boItem.ID
+	resp.Category = boItem.Category
+	resp.Title = boItem.Title
+	resp.Stock = boItem.Stock
+	resp.PriceMarket = boItem.PriceMarket
+	resp.Price = boItem.Price
+	resp.Rebate = boItem.Rebate
 
 	// 断言市场价是否显示
-	if rebateCalculator, ok := dom.Instance.(domain.ItemPriceMarketHidden); ok {
+	if rebateCalculator, ok := boItem.Instance.(bo.ItemPriceMarketHidden); ok {
 		resp.PriceMarketHidden = rebateCalculator.PriceMarketHidden()
+	}
+
+	if priceCalculator, ok := boItem.Instance.(bo.ItemPriceCalculator); ok {
+		resp.Price = priceCalculator.Price()
+
+		// 出现面向实现编程的问题
+		if _, ok := boItem.Instance.(bo.ItemTrial); !ok {
+			priceVIP := priceCalculator.PriceVIP()
+			resp.PriceVIP = &priceVIP
+		}
 	}
 }
 
-func (resp *Items) Mapping(dom domain.Items) {
-	domItemsLen := len(dom)
-	*resp = make(Items, domItemsLen)
-	if domItemsLen > 0 {
-		for domItemsIndex := 0; domItemsIndex < domItemsLen; domItemsIndex++ {
+func (resp *Items) Mapping(bos bo.Items) {
+	bosLen := len(bos)
+	*resp = make(Items, bosLen)
+	if bosLen > 0 {
+		for boIndex := 0; boIndex < bosLen; boIndex++ {
 			respItem := new(Item)
-			respItem.Mapping(dom[domItemsIndex])
-			(*resp)[domItemsIndex] = respItem
+			respItem.Mapping(bos[boIndex])
+			(*resp)[boIndex] = respItem
 		}
 	}
 }

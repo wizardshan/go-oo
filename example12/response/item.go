@@ -1,7 +1,7 @@
 package response
 
 import (
-	"go-oo/example9/bo"
+	"go-oo/example12/bo"
 )
 
 type Items []*Item
@@ -13,6 +13,7 @@ type Item struct {
 	Stock             int    `json:"stock"`
 	PriceMarket       int    `json:"priceMarket"`
 	Price             int    `json:"price"`
+	PriceVIP          *int   `json:"priceVIP,omitempty"`
 	Rebate            int    `json:"rebate,omitempty"`
 	PriceMarketHidden bool   `json:"priceMarketHidden"`
 }
@@ -33,6 +34,11 @@ func (resp *Item) Mapping(boItem *bo.Item) {
 	// 断言市场价是否显示
 	if rebateCalculator, ok := boItem.Instance.(bo.ItemPriceMarketHidden); ok {
 		resp.PriceMarketHidden = rebateCalculator.PriceMarketHidden()
+	}
+
+	if priceVIPCalculator, ok := boItem.Instance.(bo.ItemPriceVIPCalculator); ok {
+		priceVIP := priceVIPCalculator.PriceVIP()
+		resp.PriceVIP = &priceVIP
 	}
 }
 

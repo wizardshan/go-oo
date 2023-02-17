@@ -7,13 +7,12 @@ import (
 
 func main() {
 
-	r := gin.Default()
-
-	itemsCtr := controller.NewItems()
-	r.GET("example10/items", itemsCtr.Get)
+	srv := gin.Default()
 
 	itemCtr := controller.NewItem()
-	r.GET("example10/item", itemCtr.Get)
+	srv.GET("/items", itemCtr.All)
+	srv.GET("/item", itemCtr.Get)
+	srv.GET("/item/order", itemCtr.Order)
 
-	r.Run()
+	srv.Run()
 }

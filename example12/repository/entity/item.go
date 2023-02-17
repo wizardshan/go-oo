@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"go-oo/example9/bo"
+	"go-oo/example12/bo"
 )
 
 type Items []*Item
@@ -26,6 +26,10 @@ func (ent *Item) Mapping() *bo.Item {
 	// 断言计算价格
 	if priceCalculator, ok := boItem.Instance.(bo.ItemPriceCalculator); ok {
 		boItem.Price = priceCalculator.Price()
+	}
+	// 断言计算VIP价格
+	if priceVIPCalculator, ok := boItem.Instance.(bo.ItemPriceVIPCalculator); ok {
+		boItem.PriceVIP = priceVIPCalculator.PriceVIP()
 	}
 
 	// 断言计算返利

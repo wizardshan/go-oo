@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"go-oo/example8/bo"
-	"go-oo/example8/repository/entity"
+	"go-oo/example12/bo"
+	"go-oo/example12/repository/entity"
 )
 
 type Item struct {
@@ -51,6 +51,14 @@ func (repo *Item) All() bo.Items {
 	item3.Stock = 3
 	item3.PriceMarket = 100
 	items = append(items, item3)
+
+	item4 := new(entity.Item)
+	item4.ID = 4
+	item4.Category = 4
+	item4.Title = "pdf"
+	item4.Stock = 0
+	item4.PriceMarket = 100
+	items = append(items, item4)
 
 	return items.Mapping()
 }
