@@ -8,12 +8,12 @@ const (
 
 // 价格计算器接口
 type ItemPriceCalculator interface {
-	Price() int
+	PriceCalculate()
 }
 
 // 返利计算器接口
 type ItemRebateCalculator interface {
-	Rebate() int
+	RebateCalculate()
 }
 
 type Items []*Item
@@ -30,19 +30,32 @@ type Item struct {
 	Instance interface{}
 }
 
-func (bo *Item) OfInstance() {
+func (bo *Item) Of() {
+	bo.instance()
+	// 断言计算价格
+	if priceCalculator, ok := bo.Instance.(ItemPriceCalculator); ok {
+		priceCalculator.PriceCalculate()
+	}
+
+	// 断言计算返利
+	if rebateCalculator, ok := bo.Instance.(ItemRebateCalculator); ok {
+		rebateCalculator.RebateCalculate()
+	}
+}
+
+func (bo *Item) instance() {
 
 	var instance interface{}
 	switch bo.Category {
-	case ItemCategoryDiscount:
+	case 1:
 		instance = &ItemDiscount{
 			Item: bo,
 		}
-	case ItemCategoryTrial:
+	case 2:
 		instance = &ItemTrial{
 			Item: bo,
 		}
-	case ItemCategoryRebate:
+	case 3:
 		instance = &ItemRebate{
 			Item: bo,
 		}

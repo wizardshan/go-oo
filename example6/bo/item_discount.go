@@ -6,6 +6,6 @@ type ItemDiscount struct {
 }
 
 // 实现价格计算器接口
-func (bo *ItemDiscount) Price() int {
-	return bo.PriceMarket / 2
+func (bo *ItemDiscount) PriceCalculate() {
+	bo.Price = bo.PriceMarket / 2
 }

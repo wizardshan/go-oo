@@ -22,16 +22,7 @@ func (ent *Item) Mapping() *bo.Item {
 	boItem.Stock = ent.Stock
 	boItem.PriceMarket = ent.PriceMarket
 
-	boItem.OfInstance()
-	// 断言计算价格
-	if priceCalculator, ok := boItem.Instance.(bo.ItemPriceCalculator); ok {
-		boItem.Price = priceCalculator.Price()
-	}
-
-	// 断言计算返利
-	if rebateCalculator, ok := boItem.Instance.(bo.ItemRebateCalculator); ok {
-		boItem.Rebate = rebateCalculator.Rebate()
-	}
+	boItem.Of()
 
 	return boItem
 }

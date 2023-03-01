@@ -6,6 +6,6 @@ type ItemTrial struct {
 }
 
 // 实现价格计算器接口
-func (bo *ItemTrial) Price() int {
-	return 0
+func (bo *ItemTrial) PriceCalculate() {
+	bo.Price = 0
 }

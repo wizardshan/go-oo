@@ -2,12 +2,12 @@ package bo
 
 // 价格计算器接口
 type ItemPriceCalculator interface {
-	Price() int
+	PriceCalculate()
 }
 
 // 返利计算器接口
 type ItemRebateCalculator interface {
-	Rebate() int
+	RebateCalculate() int
 }
 
 type Items []*Item
@@ -23,7 +23,15 @@ type Item struct {
 	Instance interface{}
 }
 
-func (bo *Item) OfInstance() {
+func (bo *Item) Of() {
+	bo.instance()
+	// 断言计算价格
+	if priceCalculator, ok := bo.Instance.(ItemPriceCalculator); ok {
+		priceCalculator.PriceCalculate()
+	}
+}
+
+func (bo *Item) instance() {
 
 	var instance interface{}
 	switch bo.Category {
